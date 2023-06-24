@@ -13,13 +13,21 @@ app.set("view engine","ejs");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
+//middleware
+const middleware = (req,res,next)=>{
+    console.log("i am n middle")
+    if(!req.body.name && !req.body.discription && !req.body.file)
+    {res.send("failed to submit");}
+    else{next();}
+    
+}
 
 
 app.get("/",(req,res)=>{
     res.render("home");
 })
 
-app.post("/",(req,res)=>{
+app.post("/",middleware,(req,res)=>{
 
     const {title,description,file} = req.body;
     const obj = {recipe_title:title, recipe_des:description,recipe_img:file}
@@ -27,7 +35,7 @@ app.post("/",(req,res)=>{
    const rcp = Recipe.create(req.body);
     if(!rcp){res.redirect("/")}
     else{
- 
+        {res.render("submit",{obj})}
     }
 })
 
@@ -44,6 +52,17 @@ app.get("/recipes",(req,res)=>{
     });
     
 
+})
+
+
+
+app.get("/display",(req,res) =>{
+
+    const data =Recipe.find({title:"halwa"});  
+    res.render("display",{data})
+    
+    
+   
 })
 
 app.listen("1000",()=>{

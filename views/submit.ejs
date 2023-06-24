@@ -6,22 +6,22 @@
     <title>Document</title>
 </head>
 <body>
+    <%-include("navbar")%>
     <h1>
         recipe submit form
     </h1>
     <ul>
         <li>
-            <%=obj.name%>
+            <%=obj.recipe_title%>
         </li>
         <li>
-            <%=obj.pass%>
+            <%=obj.recipe_des%>
         </li>
         <li>
-            <%=obj.number%>
+            <img src="<%= obj.recipe_img %>" alt="recipe pic">
+            
         </li>
-        <li>
-            <%=obj.sex%>
-        </li>
+       
     </ul>
 </body>
 </html>
