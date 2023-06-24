@@ -26,11 +26,25 @@ app.post("/",(req,res)=>{
    console.log(req.body)
    const rcp = Recipe.create(req.body);
     if(!rcp){res.redirect("/")}
-    else{res.render("submit",{obj})}
-  
+    else{
+ 
+    }
 })
 
+app.get("/recipes",(req,res)=>{
 
+    Recipe.find({}, "title") // Find all recipes and retrieve only the "name" field
+    .then(recipe => {
+      const names = recipe.map(recipe => recipe.title);
+      res.render("recipes", {names});
+    })
+    .catch(error => {
+      console.error(error);
+      res.redirect("/");
+    });
+    
+
+})
 
 app.listen("1000",()=>{
     console.log("listening...")
